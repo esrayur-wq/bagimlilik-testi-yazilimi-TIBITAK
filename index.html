@@ -246,6 +246,16 @@ th {
     left: 0;
     top: 0;
 }
+/* HER YENİ GÖSTERİMDE TETİKLENİR */
+.tickPop {
+  animation: pop 0.14s ease-out;
+}
+
+@keyframes pop {
+  0%   { transform: scale(1);   filter: brightness(1); }
+  50%  { transform: scale(1.15); filter: brightness(1.4); }
+  100% { transform: scale(1);   filter: brightness(1); }
+}
 
 </style>
 </head>
@@ -509,9 +519,16 @@ let testScores = {
 };
 
 let testScreen = document.getElementById("testScreen");
+
 function clearEvents() {
     document.onkeydown = null;
     testScreen.onclick = null;
+}
+
+function flashScreen() {
+    testScreen.classList.remove("tickPop");
+    void testScreen.offsetWidth;
+    testScreen.classList.add("tickPop");
 }
 
 
@@ -550,6 +567,8 @@ clearEvents();
 
         let num = seq[index];
         testScreen.innerHTML = num;
+flashScreen();
+
 
         document.onkeydown = (e) => {
             if (e.code === "Space") {
@@ -591,12 +610,16 @@ clearEvents();
         let t = seq[index];
 
         if (t === "target") {
-            testScreen.innerHTML = "■";
+           testScreen.innerHTML = "■";
+flashScreen();
+
             testScreen.style.color = "red";
             testScreen.onclick = () => hit++;
         } else {
             let arr = ["★","☺","●","♥"];
             testScreen.innerHTML = arr[Math.floor(Math.random()*arr.length)];
+flashScreen();
+
             testScreen.style.color = "yellow";
             testScreen.onclick = () => wrong++;
         }
@@ -639,9 +662,13 @@ clearEvents();
 
         if (n === 2) {
             testScreen.innerHTML = "2 PUAN";
+flashScreen();
+
             testScreen.onclick = () => hit++;
         } else {
             testScreen.innerHTML = n + " PUAN";
+flashScreen();
+
             testScreen.onclick = () => wrong++;
         }
 
@@ -679,7 +706,9 @@ clearEvents();
 
         let c = seq[index];
         testScreen.style.background = c;
-        testScreen.innerHTML = "";
+       testScreen.innerHTML = "";
+flashScreen();
+
 
         testScreen.onclick = () => {
             if (c === "blue") hit++;
@@ -743,6 +772,8 @@ function stroopTesti() {
 
         let item = seq[index];
         testScreen.innerHTML = item.kelime.toUpperCase();
+flashScreen();
+
         testScreen.style.color = renkKod[item.renk];
 
         testScreen.onclick = () => {
@@ -786,7 +817,9 @@ function durtusellikTesti() {
     let interval = setInterval(() => {
 
         let w = seq[index];
-        testScreen.innerHTML = w;
+       testScreen.innerHTML = w;
+flashScreen();
+
 
         testScreen.onclick = () => {
     testScreen.onclick = null; // ikinci tıklamayı engelle
@@ -1072,6 +1105,8 @@ testScreen.style.display = "flex";
 testScreen.style.background = "#333";
 testScreen.style.fontSize = "48px";
 testScreen.innerHTML = "BİTTİ ✔";
+flashScreen();
+
 
 // 3 saniye sonra lobiye dön
 setTimeout(() => {
